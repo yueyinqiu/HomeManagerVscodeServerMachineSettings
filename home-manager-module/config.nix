@@ -162,7 +162,8 @@ in
     })
     (lib.mkIf (!cfg.mutable && cfg.settings != { }) {
       vscodeServerMachineSettings =
-        lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ] immutableSettingsOperation;
+        lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ]
+          immutableSettingsOperation;
     })
   ];
 }
