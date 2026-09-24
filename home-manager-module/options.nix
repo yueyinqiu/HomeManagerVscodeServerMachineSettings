@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
 }:
@@ -10,7 +11,7 @@ in
   options.home-manager-vscode-server-machine-settings = {
     enable = lib.mkEnableOption "VS Code Server machine settings";
 
-    mutableUserSettings = lib.mkOption {
+    mutable = lib.mkOption {
       type = lib.types.bool;
       default = false;
       description = ''
@@ -27,12 +28,15 @@ in
       '';
     };
 
-    dataFolderName = lib.mkOption {
+    settingsPath = lib.mkOption {
       type = lib.types.str;
-      default = ".vscode-server";
+      default = "${config.home.homeDirectory}/.vscode-server/data/Machine/settings.json";
       description = ''
-        Name of the VS Code Server data folder inside the home directory.
-        This is typically {file}`.vscode-server`.
+        Absolute path to the machine `settings.json` to manage.
+
+        This defaults to VS Code Server's standard location. Override it if
+        you have customised `remote.SSH.serverInstallPath` or moved the server
+        data folder.
       '';
     };
 
@@ -45,9 +49,7 @@ in
         "terminal.integrated.shellIntegration.enabled" = false;
       };
       description = ''
-        Configuration written to the VS Code Server's machine
-        {file}`settings.json` at
-        {file}`<home>/{option}`dataFolderName`/data/Machine/settings.json`.
+        Configuration written to {option}`settingsPath`.
         This can be a JSON object or a path to a custom JSON file.
       '';
     };

@@ -53,17 +53,17 @@ Manager.
 | Name | Type | Default | Description |
 | --- | --- | --- | --- |
 | `enable` | bool | `false` | Whether to enable the module |
-| `mutableUserSettings` | bool | `false` | Merge declared settings into an existing `settings.json`, preserving manual changes |
-| `dataFolderName` | str | `".vscode-server"` | VS Code Server data folder inside the home directory |
-| `settings` | JSON object or path | `{ }` | Settings written to `data/Machine/settings.json` |
+| `mutable` | bool | `false` | Merge declared settings into an existing `settings.json`, preserving manual changes |
+| `settingsPath` | str | `~/.vscode-server/data/Machine/settings.json` | Absolute path to the `settings.json` to manage |
+| `settings` | JSON object or path | `{ }` | Settings written to `settingsPath` |
 
 ## Mutable settings
 
-By default (`mutableUserSettings = false`), `settings.json` is symlinked to a
+By default (`mutable = false`), `settings.json` is symlinked to a
 store path and fully managed by Home Manager. Any changes made by VS Code
 Server or by hand are discarded on the next activation.
 
-With `mutableUserSettings = true`, the declared `settings` are merged into the
+With `mutable = true`, the declared `settings` are merged into the
 existing `settings.json` at activation time instead, so changes made outside
 Home Manager are preserved. Declared settings take precedence, and the existing
 file may contain comments or trailing commas (JSONC), which are parsed
@@ -72,7 +72,7 @@ leniently before merging.
 ```nix
 home-manager-vscode-server-machine-settings = {
   enable = true;
-  mutableUserSettings = true;
+  mutable = true;
   settings = {
     "editor.formatOnSave" = true;
   };

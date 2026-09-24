@@ -7,6 +7,7 @@
 {
   imports = [
     (import ./options.nix {
+      config = config;
       lib = lib;
       pkgs = pkgs;
     })

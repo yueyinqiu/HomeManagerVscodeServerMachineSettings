@@ -10,7 +10,7 @@ let
   jsonFormat = pkgs.formats.json { };
   json5 = pkgs.python3Packages.toPythonApplication pkgs.python3Packages.json5;
 
-  settingsPath = "${config.home.homeDirectory}/${cfg.dataFolderName}/data/Machine/settings.json";
+  settingsPath = cfg.settingsPath;
   settingsPathEsc = lib.escapeShellArg settingsPath;
 
   isPath = p: builtins.isPath p || lib.isStorePath p;
@@ -151,15 +151,15 @@ let
   '';
 in
 {
-  home.file = lib.mkIf (!cfg.mutableUserSettings && cfg.settings != { }) {
+  home.file = lib.mkIf (!cfg.mutable && cfg.settings != { }) {
     "${settingsPath}".source = declaredSettingsSource;
   };
 
   home.activation = lib.mkMerge [
-    (lib.mkIf (cfg.mutableUserSettings && cfg.settings != { }) {
+    (lib.mkIf (cfg.mutable && cfg.settings != { }) {
       vscodeServerMachineSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] mutableSettingsOperation;
     })
-    (lib.mkIf (!cfg.mutableUserSettings && cfg.settings != { }) {
+    (lib.mkIf (!cfg.mutable && cfg.settings != { }) {
       vscodeServerMachineSettings =
         lib.hm.dag.entryBetween [ "linkGeneration" ] [ "writeBoundary" ] immutableSettingsOperation;
     })
