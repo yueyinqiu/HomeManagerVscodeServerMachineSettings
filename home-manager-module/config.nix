@@ -21,6 +21,7 @@ let
     else
       jsonFormat.generate "vscode-server-machine-settings" cfg.settings;
 
+  # https://github.com/nix-community/home-manager/blob/4900baf1e219645e4a2acba35723852b2091bc20/modules/programs/vscode/mkVscodeModule.nix#L111
   mutableSettingsOperation = ''
     (
       display_path=${settingsPathEsc}
