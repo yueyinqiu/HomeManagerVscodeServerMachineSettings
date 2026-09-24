@@ -7,7 +7,7 @@ let
   jsonFormat = pkgs.formats.json { };
 in
 {
-  options.programs.vscode-server-machine-settings = {
+  options.home-manager-vscode-server-machine-settings = {
     enable = lib.mkEnableOption "VS Code Server machine settings";
 
     mutableUserSettings = lib.mkOption {

@@ -16,10 +16,10 @@ Manager.
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     home-manager.url = "github:nix-community/home-manager";
-    vscode-server-machine-settings.url = "github:yueyinqiu/HomeManagerVscodeServerMachineSettings";
+    home-manager-vscode-server-machine-settings.url = "github:yueyinqiu/HomeManagerVscodeServerMachineSettings";
   };
 
-  outputs = { nixpkgs, home-manager, vscode-server-machine-settings, ... }:
+  outputs = { nixpkgs, home-manager, home-manager-vscode-server-machine-settings, ... }:
     let
       system = "x86_64-linux";
     in
@@ -27,13 +27,13 @@ Manager.
       homeConfigurations.alice = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.${system};
         modules = [
-          vscode-server-machine-settings.homeManagerModules.vscode-server-machine-settings
+          home-manager-vscode-server-machine-settings.homeManagerModules.home-manager-vscode-server-machine-settings
           {
             home.username = "alice";
             home.homeDirectory = "/home/alice";
             home.stateVersion = "26.05";
 
-            programs.vscode-server-machine-settings = {
+            home-manager-vscode-server-machine-settings = {
               enable = true;
               settings = {
                 "editor.formatOnSave" = true;
@@ -70,7 +70,7 @@ file may contain comments or trailing commas (JSONC), which are parsed
 leniently before merging.
 
 ```nix
-programs.vscode-server-machine-settings = {
+home-manager-vscode-server-machine-settings = {
   enable = true;
   mutableUserSettings = true;
   settings = {

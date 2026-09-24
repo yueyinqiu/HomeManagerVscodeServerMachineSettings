@@ -5,7 +5,7 @@
 }:
 
 let
-  cfg = config.programs.vscode-server-machine-settings;
+  cfg = config.home-manager-vscode-server-machine-settings;
 
   jsonFormat = pkgs.formats.json { };
   json5 = pkgs.python3Packages.toPythonApplication pkgs.python3Packages.json5;
